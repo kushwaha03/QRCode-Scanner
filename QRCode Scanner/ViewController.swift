@@ -10,12 +10,13 @@ import UIKit
 import AVFoundation
 class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
+    @IBOutlet weak var MsgLbl: UILabel!
     @IBOutlet weak var imageView: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-
+        MsgLbl.isHidden = true
         let photoTap = UITapGestureRecognizer(target: self, action: #selector(promptPhoto))
         self.view.addGestureRecognizer(photoTap)
         
@@ -100,20 +101,23 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
                  
                  if qrCodeLink=="" {
                      print("nothing")
-                    let ac = UIAlertController(title: "Sorry ", message: "this QRCode are not supported!", preferredStyle: .alert)
-                                ac.addAction(UIAlertAction(title: "OK", style: .default))
-                                present(ac, animated: true)
+                    MsgLbl.isHidden = false
+                    MsgLbl.text = "This QRCode are not supported !"
+
                     
                  }else{
                      print("message: \(qrCodeLink)")
+                    MsgLbl.isHidden = false
+                    MsgLbl.text = "Well, This QRCode are supported !"
+
                     
-                    let ac = UIAlertController(title: "Well Done", message: "Your QRCode are supported!", preferredStyle: .alert)
-                    ac.addAction(UIAlertAction(title: "OK", style: .default))
-                    present(ac, animated: true)
+
                  }
              }
              else{
                 print("Something went wrong")
+            MsgLbl.text = "Something went wrong"
+
              }
             self.dismiss(animated: true, completion: nil)
            }
